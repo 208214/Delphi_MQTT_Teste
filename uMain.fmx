@@ -1,0 +1,629 @@
+﻿object main: Tmain
+  Left = 0
+  Top = 0
+  BorderIcons = [biSystemMenu]
+  Caption = 'Teste'
+  ClientHeight = 542
+  ClientWidth = 640
+  Position = DesktopCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object Panel1: TPanel
+    Position.X = 8.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 233.000000000000000000
+    Size.Height = 153.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 32
+    object pnGrafic: TPanel
+      Position.Y = 160.000000000000000000
+      Size.Width = 233.000000000000000000
+      Size.Height = 297.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 12
+    end
+  end
+  object btStartSignal: TButton
+    Position.X = 80.000000000000000000
+    Position.Y = 134.000000000000000000
+    TabOrder = 2
+    Text = 'Gerar Sinal'
+    OnClick = btStartSignalClick
+  end
+  object lbUmidadeUnit: TLabel
+    Position.X = 176.000000000000000000
+    Position.Y = 60.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = '%'
+    TabOrder = 6
+  end
+  object lbTemperatura: TLabel
+    Position.X = 16.000000000000000000
+    Position.Y = 36.000000000000000000
+    Size.Width = 81.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Temperatura:'
+    TabOrder = 28
+  end
+  object lbUmidade: TLabel
+    Position.X = 16.000000000000000000
+    Position.Y = 60.000000000000000000
+    Size.Width = 81.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Umidade:'
+    TabOrder = 10
+  end
+  object edUmidade: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 29
+    Text = '50'
+    Position.X = 96.000000000000000000
+    Position.Y = 60.000000000000000000
+    Enabled = False
+    Size.Width = 73.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object lbTemperaturaUnit: TLabel
+    Position.X = 176.000000000000000000
+    Position.Y = 36.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'C'
+    TabOrder = 13
+  end
+  object edTemperatura: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 30
+    Text = '25'
+    Position.X = 96.000000000000000000
+    Position.Y = 36.000000000000000000
+    Enabled = False
+    Size.Width = 73.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Panel2: TPanel
+    Position.X = 249.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 377.000000000000000000
+    Size.Height = 177.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 31
+    object lbHostName: TLabel
+      Position.X = 8.000000000000000000
+      Position.Y = 30.000000000000000000
+      Size.Width = 129.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Endere'#231'o Broker MQTT:'
+      TabOrder = 6
+    end
+    object lbHostPort: TLabel
+      Position.X = 8.000000000000000000
+      Position.Y = 57.000000000000000000
+      Size.Width = 129.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Porta Broker MQTT:'
+      TabOrder = 5
+    end
+    object lbIDClient: TLabel
+      Position.X = 8.000000000000000000
+      Position.Y = 83.000000000000000000
+      Size.Width = 129.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'ID do Dispositivo:'
+      TabOrder = 4
+    end
+    object lbUser: TLabel
+      Position.X = 8.000000000000000000
+      Position.Y = 109.000000000000000000
+      Size.Width = 129.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Usu'#225'rio (dispositivo):'
+      TabOrder = 3
+    end
+    object lbPassword: TLabel
+      Position.X = 8.000000000000000000
+      Position.Y = 134.000000000000000000
+      Size.Width = 113.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Senha (dispositivo):'
+      TabOrder = 2
+    end
+    object edCredencialPassword: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 7
+      Text = 'XhHo3b48r4W6'
+      Position.X = 141.000000000000000000
+      Position.Y = 133.000000000000000000
+      Size.Width = 119.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object edCredencialUser: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 8
+      Text = 'ghkalbmjasap'
+      Position.X = 141.000000000000000000
+      Position.Y = 107.000000000000000000
+      Size.Width = 119.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object edIDDevice: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 9
+      Text = 'Delphi_MQTT'
+      Position.X = 141.000000000000000000
+      Position.Y = 81.000000000000000000
+      Size.Width = 118.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object edHostPort: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 10
+      Text = '1883'
+      Position.X = 141.000000000000000000
+      Position.Y = 55.000000000000000000
+      Size.Width = 117.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object edHostName: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 11
+      Text = 'mqtt.prod.konkerlabs.net'
+      Position.X = 141.000000000000000000
+      Position.Y = 29.000000000000000000
+      Size.Width = 228.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object btConnect: TButton
+      Position.X = 280.000000000000000000
+      Position.Y = 78.000000000000000000
+      Size.Width = 80.000000000000000000
+      Size.Height = 57.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      Text = 'Conecta'
+      OnClick = btConnectClick
+    end
+    object lbStatus: TLabel
+      Position.X = 8.000000000000000000
+      Position.Y = 157.000000000000000000
+      Size.Width = 297.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 12
+    end
+  end
+  object tDados: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    Position.X = 248.000000000000000000
+    Position.Y = 304.000000000000000000
+    Size.Width = 177.000000000000000000
+    Size.Height = 233.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    Viewport.Width = 173.000000000000000000
+    Viewport.Height = 229.000000000000000000
+  end
+  object Panel3: TPanel
+    Position.X = 248.000000000000000000
+    Position.Y = 191.000000000000000000
+    Size.Width = 379.000000000000000000
+    Size.Height = 105.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 34
+    object edTopicoTemperatura: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 7
+      Text = 'data/ghkalbmjasap/pub/temperatura'
+      Position.X = 106.000000000000000000
+      Position.Y = 5.000000000000000000
+      Size.Width = 260.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object lbTópicoTemp: TLabel
+      Position.X = 15.000000000000000000
+      Position.Y = 5.000000000000000000
+      Size.Width = 89.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Temperatura:'
+      TabOrder = 2
+    end
+    object btPublish: TButton
+      Position.X = 136.000000000000000000
+      Position.Y = 77.000000000000000000
+      TabOrder = 0
+      Text = 'Publicar'
+      OnClick = btPublishClick
+    end
+    object lbTopicoUmid: TLabel
+      Position.X = 15.000000000000000000
+      Position.Y = 29.000000000000000000
+      Size.Width = 89.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Umidade:'
+      TabOrder = 1
+    end
+    object edTopicoUmidade: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 6
+      Text = 'data/ghkalbmjasap/pub/Umidade'
+      Position.X = 105.000000000000000000
+      Position.Y = 29.000000000000000000
+      Size.Width = 260.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
+  end
+  object Publish_Continous: TTimer
+    Enabled = False
+    OnTimer = Publish_ContinousTimer
+    Left = 296
+    Top = 400
+  end
+  object tmSignal: TTimer
+    Enabled = False
+    Interval = 100
+    OnTimer = tmSignalTimer
+    Left = 376
+    Top = 400
+  end
+  object lbTimer: TLabel
+    Position.X = 16.000000000000000000
+    Position.Y = 84.000000000000000000
+    Size.Width = 81.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Sample Time:'
+    TabOrder = 9
+  end
+  object edTimer: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 14
+    Text = '100'
+    Position.X = 96.000000000000000000
+    Position.Y = 84.000000000000000000
+    Size.Width = 73.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object lbmilisecond: TLabel
+    Position.X = 176.000000000000000000
+    Position.Y = 84.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'ms'
+    TabOrder = 5
+  end
+  object imTemperaturaGraf: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 16.000000000000000000
+    Position.Y = 208.000000000000000000
+    Size.Width = 217.000000000000000000
+    Size.Height = 113.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object imUmidadeGraf: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 16.000000000000000000
+    Position.Y = 344.000000000000000000
+    Size.Width = 217.000000000000000000
+    Size.Height = 113.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object lbTitulo1: TLabel
+    StyledSettings = [Family, Style, FontColor]
+    Position.X = 16.000000000000000000
+    Position.Y = 14.000000000000000000
+    Size.Width = 217.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Size = 14.000000000000000000
+    TextSettings.HorzAlign = Center
+    Text = 'Gera'#231#227'o de Sinais - Simulador'
+    TabOrder = 17
+  end
+  object lbTitulo2: TLabel
+    StyledSettings = [Family, Style, FontColor]
+    Position.X = 256.000000000000000000
+    Position.Y = 13.000000000000000000
+    Size.Width = 361.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Size = 14.000000000000000000
+    TextSettings.HorzAlign = Center
+    Text = 'Configura'#231#227'o e conex'#227'o com o Broker MQTT'
+    TabOrder = 15
+  end
+  object Label1: TLabel
+    StyledSettings = [Family, Style, FontColor]
+    Position.X = 16.000000000000000000
+    Position.Y = 174.000000000000000000
+    Size.Width = 217.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Size = 14.000000000000000000
+    TextSettings.HorzAlign = Center
+    Text = 'Gr'#225'ficos'
+    TabOrder = 16
+  end
+  object lbTitulo4: TLabel
+    Position.X = 16.000000000000000000
+    Position.Y = 187.000000000000000000
+    Size.Width = 73.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Temperatura'
+    TabOrder = 27
+  end
+  object Label2: TLabel
+    Position.X = 16.000000000000000000
+    Position.Y = 323.000000000000000000
+    Size.Width = 73.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Umidade'
+    TabOrder = 19
+  end
+  object pnDataSendGraf: TPanel
+    Position.X = 432.000000000000000000
+    Position.Y = 304.000000000000000000
+    Size.Width = 193.000000000000000000
+    Size.Height = 233.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 38
+    object imTempSend: TImage
+      MultiResBitmap = <
+        item
+        end>
+      Position.X = 8.000000000000000000
+      Position.Y = 16.000000000000000000
+      Size.Width = 177.000000000000000000
+      Size.Height = 97.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object imUmidSend: TImage
+      MultiResBitmap = <
+        item
+        end>
+      Position.X = 8.000000000000000000
+      Position.Y = 128.000000000000000000
+      Size.Width = 177.000000000000000000
+      Size.Height = 97.000000000000000000
+      Size.PlatformDefault = False
+    end
+  end
+  object Label3: TLabel
+    Position.X = 436.000000000000000000
+    Position.Y = 303.000000000000000000
+    Size.Width = 73.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Temperatura'
+    TabOrder = 20
+  end
+  object Label4: TLabel
+    Position.X = 435.000000000000000000
+    Position.Y = 416.000000000000000000
+    Size.Width = 73.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Umidade'
+    TabOrder = 18
+  end
+  object pnDisplaysGer: TPanel
+    Position.X = 8.000000000000000000
+    Position.Y = 472.000000000000000000
+    Size.Width = 113.000000000000000000
+    Size.Height = 64.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 42
+    object pnDisplaySend: TPanel
+      Position.X = 120.000000000000000000
+      Size.Width = 113.000000000000000000
+      Size.Height = 64.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 30
+    end
+  end
+  object Label5: TLabel
+    Position.X = 44.000000000000000000
+    Position.Y = 473.000000000000000000
+    Size.Width = 49.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Gerador'
+    TabOrder = 22
+  end
+  object Label6: TLabel
+    Position.X = 163.000000000000000000
+    Position.Y = 473.000000000000000000
+    Size.Width = 49.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Enviado'
+    TabOrder = 21
+  end
+  object Label7: TLabel
+    Position.X = 22.000000000000000000
+    Position.Y = 487.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Temp'
+    TabOrder = 26
+  end
+  object Label8: TLabel
+    Position.X = 77.000000000000000000
+    Position.Y = 487.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Umid'
+    TabOrder = 25
+  end
+  object Label9: TLabel
+    Position.X = 195.000000000000000000
+    Position.Y = 485.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Umid'
+    TabOrder = 23
+  end
+  object Label10: TLabel
+    Position.X = 138.000000000000000000
+    Position.Y = 486.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Temp'
+    TabOrder = 24
+  end
+  object edTempGer: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 46
+    Text = '00.00'
+    TextSettings.Font.Size = 17.000000000000000000
+    TextSettings.Font.StyleExt = {00070000000000000004000000}
+    Position.X = 11.000000000000000000
+    Position.Y = 504.000000000000000000
+    Enabled = False
+    Size.Width = 51.000000000000000000
+    Size.Height = 28.000000000000000000
+    Size.PlatformDefault = False
+    StyledSettings = [Family, Other]
+  end
+  object edUmidGer: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 44
+    Text = '00.00'
+    TextSettings.Font.Size = 17.000000000000000000
+    TextSettings.Font.StyleExt = {00070000000000000004000000}
+    Position.X = 65.000000000000000000
+    Position.Y = 504.000000000000000000
+    Enabled = False
+    Size.Width = 51.000000000000000000
+    Size.Height = 28.000000000000000000
+    Size.PlatformDefault = False
+    StyledSettings = [Family, Other]
+  end
+  object edTempSend: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 45
+    Text = '00.00'
+    TextSettings.Font.Size = 17.000000000000000000
+    TextSettings.Font.StyleExt = {00070000000000000004000000}
+    Position.X = 132.000000000000000000
+    Position.Y = 504.000000000000000000
+    Enabled = False
+    Size.Width = 51.000000000000000000
+    Size.Height = 28.000000000000000000
+    Size.PlatformDefault = False
+    StyledSettings = [Family, Other]
+  end
+  object edUmidSend: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 43
+    Text = '00.00'
+    TextSettings.Font.Size = 17.000000000000000000
+    TextSettings.Font.StyleExt = {00070000000000000004000000}
+    Position.X = 186.000000000000000000
+    Position.Y = 504.000000000000000000
+    Enabled = False
+    Size.Width = 51.000000000000000000
+    Size.Height = 28.000000000000000000
+    Size.PlatformDefault = False
+    StyledSettings = [Family, Other]
+  end
+  object lbFreqGen: TLabel
+    Position.X = 16.000000000000000000
+    Position.Y = 108.000000000000000000
+    Size.Width = 81.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Freq. Gerador:'
+    TabOrder = 7
+  end
+  object edFreqGen: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 11
+    Text = '1'
+    Position.X = 96.000000000000000000
+    Position.Y = 108.000000000000000000
+    Size.Width = 73.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object lbFreqGenUnit: TLabel
+    Position.X = 176.000000000000000000
+    Position.Y = 108.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Hz'
+    TabOrder = 3
+  end
+  object lbSampleSend: TLabel
+    Position.X = 264.000000000000000000
+    Position.Y = 244.000000000000000000
+    Size.Width = 81.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Sample Time:'
+    TabOrder = 8
+  end
+  object edSampleSend: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 12
+    Text = '1'
+    Position.X = 352.000000000000000000
+    Position.Y = 244.000000000000000000
+    Size.Width = 73.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object lbSampleSendUnit: TLabel
+    Position.X = 432.000000000000000000
+    Position.Y = 244.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 's'
+    TabOrder = 4
+  end
+  object MQTTClient: TTMSMQTTClient
+    ClientID = 'MQTT_DELPHI'
+    OnConnectedStatusChanged = MQTTClientConnectedStatusChanged
+    Version = '1.1.0.2'
+    Left = 296
+    Top = 336
+  end
+end
