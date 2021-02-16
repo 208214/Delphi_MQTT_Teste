@@ -1,0 +1,7 @@
+mqtt.prod.konkerlabs.net
+1883
+SEND_TEMP_UMID
+d69ckjqn74fo
+9hmCjyNdvvxQ
+data/d69ckjqn74fo/pub/temperatura
+data/d69ckjqn74fo/pub/temperatura

@@ -1,0 +1,250 @@
+unit uMain;
+
+interface
+
+uses
+  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
+  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, System.Json.Types,
+  System.Json.Writers, REST.Types, FMX.ScrollBox, FMX.Memo, FMX.Edit, FMX.StdCtrls,
+  FMX.Controls.Presentation, Data.Bind.Components, Data.Bind.ObjectScope,
+  REST.Client, TMS.MQTT.Global, TMS.MQTT.Client, FMX.Objects;
+
+type
+  Tmain = class(TForm)
+    btStartSignal: TButton;
+    lbTemperatura: TLabel;
+    lbUmidade: TLabel;
+    edTemperatura: TEdit;
+    edUmidade: TEdit;
+    lbTemperaturaUnit: TLabel;
+    lbUmidadeUnit: TLabel;
+    Panel1: TPanel;
+    MQTTClient: TTMSMQTTClient;
+    Panel2: TPanel;
+    lbHostName: TLabel;
+    lbHostPort: TLabel;
+    lbIDClient: TLabel;
+    lbUser: TLabel;
+    lbPassword: TLabel;
+    edCredencialPassword: TEdit;
+    edCredencialUser: TEdit;
+    edIDDevice: TEdit;
+    edHostPort: TEdit;
+    edHostName: TEdit;
+    btConnect: TButton;
+    tDados: TMemo;
+    lbStatus: TLabel;
+    Panel3: TPanel;
+    edTopicoTemperatura: TEdit;
+    lbTópicoTemp: TLabel;
+    btPublish: TButton;
+    Publish_Continous: TTimer;
+    tmSignal: TTimer;
+    lbTopicoUmid: TLabel;
+    edTopicoUmidade: TEdit;
+    lbTimer: TLabel;
+    edTimer: TEdit;
+    lbmilisecond: TLabel;
+    imTemperaturaGraf: TImage;
+    imUmidadeGraf: TImage;
+    pnGrafic: TPanel;
+    lbTitulo1: TLabel;
+    lbTitulo2: TLabel;
+    Label1: TLabel;
+    lbTitulo4: TLabel;
+    Label2: TLabel;
+    sdConfigurations: TSaveDialog;
+    odConfigurations: TOpenDialog;
+    procedure btConnectClick(Sender: TObject);
+    procedure MQTTClientConnectedStatusChanged(ASender: TObject;
+      const AConnected: Boolean; AStatus: TTMSMQTTConnectionStatus);
+    procedure btPublishClick(Sender: TObject);
+    procedure Publish_ContinousTimer(Sender: TObject);
+    procedure tmSignalTimer(Sender: TObject);
+    procedure btStartSignalClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+ //   function CriaJSON(NomeSinal: string; valor: integer): string;
+  var
+    time_second   : integer;
+  end;
+
+var
+  main          : Tmain;
+  Writer        : TJsonTextWriter;
+  StringWriter  : TStringWriter;
+
+implementation
+
+{$R *.fmx}
+function CriaJSON(NomeSinal: string; Unidade: string; valor: Double): string;
+begin
+  StringWriter        := TStringWriter.Create();
+  Writer              := TJsonTextWriter.Create(StringWriter);
+  Writer.Formatting   := TJsonFormatting.Indented;
+
+//  Writer.WriteStartObject;
+//  Writer.WritePropertyName('Cloud');
+//  Writer.WriteStartArray;
+  Writer.WriteStartObject;
+  Writer.WritePropertyName(NomeSinal);
+  Writer.WriteValue(valor);
+  Writer.WritePropertyName('unit');
+  Writer.WriteValue(Unidade);
+  Writer.WriteEndObject;
+//  Writer.WriteEndArray;
+//  Writer.WriteEndObject;
+
+  Result  := StringWriter.ToString;
+
+end;
+
+procedure TMain.MQTTClientConnectedStatusChanged(ASender: TObject;
+  const AConnected: Boolean; AStatus: TTMSMQTTConnectionStatus);
+begin
+  if (AConnected) then lbStatus.Text := 'Conectado ao Broker' else
+  Begin
+    case AStatus of
+      csNotConnected: ShowMessage('Sem Conexão');
+      csConnectionRejected_InvalidProtocolVersion: ShowMessage('Protocolo Invalido');
+      csConnectionRejected_InvalidIdentifier: ShowMessage('Identificador Invalido');
+      csConnectionRejected_ServerUnavailable: ShowMessage('Servidor Indisponível');
+      csConnectionRejected_InvalidCredentials: ShowMessage('Credenciais Invalidas') ;
+      csConnectionRejected_ClientNotAuthorized: ShowMessage('Cliente Não Autorizado');
+      csConnectionLost: ShowMessage('Conexão Pedida');
+      csConnecting: lbStatus.Text := 'Conectando';
+      csReconnecting: lbStatus.Text := 'Reconectando';
+      csConnected: lbStatus.Text := 'Conectado com o Broker';
+    end;
+  tDados.Lines.Clear;
+  tDados.Lines.Add(MQTTClient.BrokerHostName);
+  tDados.Lines.Add(IntToStr(MQTTClient.BrokerPort));
+  tDados.Lines.Add(MQTTClient.Credentials.Username);
+  tDados.Lines.Add(MQTTClient.Credentials.Password);
+  tDados.Lines.Add(MQTTClient.ClientID);
+  tDados.Lines.Add('');
+  End;
+
+end;
+
+procedure Tmain.Publish_ContinousTimer(Sender: TObject);
+var
+  packetId      : Word;
+  JSONData      : String;
+begin
+
+  JSONData  := CriaJson(lbTemperatura.Text, lbTemperaturaUnit.text, StrToFloat(edTemperatura.Text));
+  packetId  := MQTTClient.Publish (edTopicoTemperatura.Text, JSONData , qosAtleastOnce, true);
+  tDados.Lines.Add(lbTemperatura.Text + ' '+ edTemperatura.Text + ' '+ lbTemperaturaUnit.Text);
+
+  JSONData  := CriaJson(lbUmidade.Text, lbUmidadeUnit.Text, StrToFloat(edUmidade.Text));
+  packetId  := MQTTClient.Publish (edTopicoUmidade.Text, JSONData , qosAtleastOnce, true);
+  tDados.Lines.Add(lbUmidade.Text + ' '+ edUmidade.Text + ' '+ lbUmidadeUnit.Text);
+
+end;
+
+
+procedure Tmain.tmSignalTimer(Sender: TObject);
+var
+  temperatura : double;
+  umidade     : double;
+  omega       : double;
+  temp, time  : TPointF;
+begin
+  omega               := 2 * pi ;
+  time_second         := time_second + 1;
+  temperatura         := ((25 * sin (omega * (time_second/(1000/tmSignal.Interval))))+ 25);
+  umidade             := ((50 * cos (omega * (time_second/(1000/tmSignal.Interval))))+ 50);
+  edTemperatura.Text  := format('%0.4f',[temperatura]);
+  edUmidade.Text      := format('%0.4f',[umidade]);
+
+
+
+
+end;
+
+
+procedure Tmain.btConnectClick(Sender: TObject);
+begin
+  MQTTClient.BrokerHostName       := edHostName.Text;
+  MQTTClient.BrokerPort           := strToint (edHostPort.text);
+  MQTTClient.ClientID             := edIDDevice.Text;
+  MQTTClient.Credentials.Username := edCredencialUser.Text;
+  MQTTClient.Credentials.Password := edCredencialPassword.Text;
+
+  MQTTClient.Connect(True);
+
+end;
+
+procedure Tmain.btPublishClick(Sender: TObject);
+begin
+  if (Publish_Continous.Enabled = false) then
+  begin
+    btPublish.Text            := 'Para Publicar';
+    Publish_Continous.Enabled := true;
+
+  end else
+  if (Publish_Continous.Enabled = true) then
+  begin
+    btPublish.Text            := 'Publicar';
+    Publish_Continous.Enabled := false;
+  end else
+
+end;
+
+procedure Tmain.btStartSignalClick(Sender: TObject);
+begin
+  if (tmSignal.Enabled = false) then
+  begin
+    tmSignal.Interval     := StrToInt(edTimer.Text);
+    btStartSignal.Text    := 'Parar Sinal';
+    tmSignal.Enabled      := true;
+  end else
+  if (tmSignal.Enabled = true) then
+  begin
+    btStartSignal.Text    := 'Geral Sinal';
+    tmSignal.Enabled      := false;
+  end;
+
+end;
+
+
+
+procedure Tmain.FormCreate(Sender: TObject);
+var
+  p1_temp, p2_temp, p3_temp, p4_temp : TPointF;
+  p1_umid, p2_umid, p3_umid, p4_umid : TPointF;
+begin
+  p1_temp  := TPointF.Create(round(imTemperaturaGraf.Width/2),0);
+  p2_temp  := TPointF.Create(round(imTemperaturaGraf.Width/2),round(imTemperaturaGraf.Height));
+  p3_temp  := TPointF.Create(0, round(imTemperaturaGraf.Height/2));
+  p4_temp  := TPointF.Create(round(imTemperaturaGraf.Width), round(imTemperaturaGraf.Height/2));
+  imTemperaturaGraf.Bitmap.SetSize(round(imTemperaturaGraf.Width),round(imTemperaturagraf.Height));
+  imTemperaturaGraf.Bitmap.Clear(TAlphaColors.Black);
+  imTemperaturaGraf.Bitmap.Canvas.BeginScene;
+  imTemperaturaGraf.Bitmap.Canvas.Stroke.Thickness  := 0.5;
+  imTemperaturaGraf.Bitmap.Canvas.Stroke.Color := TAlphaColors.Lightgray;
+  imTemperaturaGraf.Bitmap.Canvas.DrawLine(p1_temp, p2_temp, 100);
+  imTemperaturaGraf.Bitmap.Canvas.DrawLine(p3_temp, p4_temp, 100);
+  imTemperaturaGraf.Bitmap.Canvas.EndScene;
+
+  p1_umid  := TPointF.Create(round(imUmidadeGraf.Width/2),0);
+  p2_umid  := TPointF.Create(round(imUmidadeGraf.Width/2),round(imUmidadeGraf.Height));
+  p3_umid  := TPointF.Create(0, round(imUmidadeGraf.Height/2));
+  p4_umid  := TPointF.Create(round(imUmidadeGraf.Width), round(imUmidadeGraf.Height/2));
+  imUmidadeGraf.Bitmap.SetSize(round(imUmidadeGraf.Width),round(imUmidadeGraf.Height));
+  imUmidadeGraf.Bitmap.Clear(TAlphaColors.Black);
+  imUmidadeGraf.Bitmap.Canvas.BeginScene;
+  imUmidadeGraf.Bitmap.Canvas.Stroke.Thickness  := 0.5;
+  imUmidadeGraf.Bitmap.Canvas.Stroke.Color := TAlphaColors.Lightgray;
+  imUmidadeGraf.Bitmap.Canvas.DrawLine(p1_umid, p2_umid, 100);
+  imUmidadeGraf.Bitmap.Canvas.DrawLine(p3_umid, p4_umid, 100);
+  imUmidadeGraf.Bitmap.Canvas.EndScene;
+
+end;
+
+end.
